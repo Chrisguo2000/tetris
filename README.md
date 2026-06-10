@@ -61,3 +61,53 @@ python test.py
 ```text
 logs/run_log.txt
 ```
+
+## 每周发送邮件
+
+项目还包含一个每周发送邮件的 workflow：
+
+```text
+.github/workflows/weekly_email.yml
+```
+
+默认每周一 `UTC 01:00` 自动发送，也可以在 GitHub 的 `Actions` 页面手动运行 `Weekly Email`。
+
+### 配置邮箱 Secrets
+
+进入 GitHub 仓库页面：
+
+```text
+Settings -> Secrets and variables -> Actions -> New repository secret
+```
+
+添加下面这些 repository secrets：
+
+```text
+SMTP_HOST
+SMTP_PORT
+SMTP_USERNAME
+SMTP_PASSWORD
+MAIL_FROM
+MAIL_TO
+```
+
+常见 Gmail 配置示例：
+
+```text
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=你的 Gmail 地址
+SMTP_PASSWORD=你的 Gmail App Password
+MAIL_FROM=你的 Gmail 地址
+MAIL_TO=收件邮箱地址
+```
+
+`SMTP_PASSWORD` 不要填写邮箱登录密码，通常需要填写邮箱服务生成的 SMTP 授权码或 App Password。
+
+### 手动测试邮件
+
+1. 打开 GitHub 仓库页面。
+2. 进入 `Actions` 页面。
+3. 选择 `Weekly Email`。
+4. 点击 `Run workflow`。
+5. 等待运行成功后，检查 `MAIL_TO` 设置的收件邮箱。
