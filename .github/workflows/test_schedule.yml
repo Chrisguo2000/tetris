@@ -1,0 +1,33 @@
+name: Test Scheduled Python Run
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 1 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  run-test:
+    name: Run test.py
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Execute test.py
+        run: python test.py
+
+      - name: Upload run log
+        uses: actions/upload-artifact@v4
+        with:
+          name: run-log
+          path: logs/run_log.txt
+          if-no-files-found: error
